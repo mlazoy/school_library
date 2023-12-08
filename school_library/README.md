@@ -14,7 +14,7 @@
 * Run
 
       $ git clone https://github.com/nickbel7/hotel-management.git
-      $ cd hotel-management
+      $ cd school_library
 
 * Add your database credentials at config.py file in website folder,
 
