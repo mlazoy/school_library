@@ -15,7 +15,7 @@
 
 * Run
 
-      $ git clone https://github.com/evpipis/school_library.git
+      $ git clone https://github.com/mlazoy/school_library.git
       $ cd school_library/lib-files
 
 * Create config.py file in website folder and add the following credentials, for example,
