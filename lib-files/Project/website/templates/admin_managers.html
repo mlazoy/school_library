@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Managers {% endblock %}
+
+{% block content %}
+
+<!-- MANAGER SIGN UP -->
+<form method="POST">
+  <h3 align="center"> Manager Sign Up for library {{id}} </h3>
+  
+  <div class="form-group">
+    <label for="name"> Full Name </label>
+    <input
+    type="text"
+    class="form-control"
+    id="name"
+    name="name"
+    placeholder="Enter Full Name"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="birth_date"> Birth date </label>
+    <input
+    type="date"
+    class="form-control"
+    id="birth_date"
+    name="birth_date"
+    placeholder="Enter Birth Date"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="username"> Username </label>
+    <input
+    type="text"
+    class="form-control"
+    id="username"
+    name="username"
+    placeholder="Enter Username"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="password"> Password </label>
+    <input
+    type="password"
+    class="form-control"
+    id="password"
+    name="password"
+    placeholder="Enter Password"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="password2"> Password (validation) </label>
+    <input
+    type="password"
+    class="form-control"
+    id="password2"
+    name="password2"
+    placeholder="Enter Password (again)"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="school_id"> School Unit </label>
+    <select class="form-control" id="school_id" name="school_id">
+      {% for school in schools %}
+      <option value="{{school.id}}"> "{{school.name}}" </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <br />
+  
+  <button type="submit" class="btn btn-primary">Sign Up</button>
+</form>
+
+
+<!-- INACTIVE MANAGERS -->
+<ul class="list-group list-group-flush" id="admin_inactive_managers">
+  <h3 align="center">Inactive Managers</h3>
+  {% for manager in inactive_managers %}
+  <li class="list-group-item">
+    {{manager.username}} (school_id: {{manager.school_id}})
+    <button type="button" class="close" onclick="deleteUser({{manager.id}})">
+      <span aria-hidden="true">delete</span>
+    </button>
+    <button type="button" class="close" onclick="switchActivation({{manager.id}})">
+      <span aria-hidden="true">activate&nbsp&nbsp</span>
+    </button>
+  </li>
+  {% endfor %}
+</ul>
+
+
+<!-- ACTIVE MANAGERS -->
+<ul class="list-group list-group-flush" id="admin_active_members">
+  <h3 align="center">Active Managers</h3>
+  {% for manager in active_managers %}
+  <li class="list-group-item">
+    {{manager.username}} (school_id: {{manager.school_id}})
+    <button type="button" class="close" onclick="deleteUser({{manager.id}})">
+      <span aria-hidden="true">delete</span>
+    </button>
+    <button type="button" class="close" onclick="switchActivation({{manager.id}})">
+      <span aria-hidden="true">deactivate&nbsp&nbsp</span>
+    </button>
+  </li>
+  {% endfor %}
+</ul>
+
+<script type="text/javascript">
+function switchActivation(manager_id) {
+    fetch("/admin/managers/switch_activation", {
+        method: "POST",
+        body: JSON.stringify({ manager_id: manager_id }),
+    }).then((_res) => {
+        window.location.href = "/admin/managers";
+    });
+}
+
+function deleteUser(manager_id) {
+    fetch("/admin/managers/delete_user", {
+        method: "POST",
+        body: JSON.stringify({ manager_id: manager_id }),
+    }).then((_res) => {
+        window.location.href = "/admin/managers";
+    });
+}
+</script>
+
+{% endblock %}
