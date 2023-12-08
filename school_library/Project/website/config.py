@@ -1,5 +1,0 @@
-secret_key = 'some random string'
-mysql_host = 'localhost'
-mysql_user = 'root'
-mysql_password = 'gatakia22'
-mysql_db = 'dbmsProject'
